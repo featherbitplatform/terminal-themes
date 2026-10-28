@@ -20,6 +20,8 @@ ALLOWED_LICENSES = ["MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC",
                     "Unlicense", "CC0-1.0", "Zlib"]
 CATALOG_FORMAT = 1
 SLUG = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
+MAX_ID_LEN = 64
+RESERVED_ID_PREFIX = "gallery-"  # the app uses it for installed copies
 HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
 COLOR_KEYS = ["foreground", "background", "cursor", "selection", "black", "red", "green",
               "yellow", "blue", "magenta", "cyan", "white", "bright_black", "bright_red",
@@ -73,6 +75,10 @@ def validate_theme(root, stem, t):
         err(f"id {tid!r} is not a valid slug")
     elif tid != stem:
         err(f"id {tid!r} does not match the file name")
+    elif len(tid) > MAX_ID_LEN:
+        err(f"id is longer than {MAX_ID_LEN} characters")
+    elif tid.startswith(RESERVED_ID_PREFIX):
+        err(f"id must not start with the reserved prefix {RESERVED_ID_PREFIX!r}")
     if not SLUG.match(stem):
         err("file name is not a valid slug")
     if not isinstance(t.get("name"), str) or not t["name"].strip():

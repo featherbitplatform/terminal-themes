@@ -94,6 +94,18 @@ class CatalogTests(unittest.TestCase):
         self.repo.raw("Bad_Id.toml", theme_text(id="Bad_Id"))
         self.assertTrue(any("slug" in e for e in self.repo.errors()))
 
+    def test_id_length_limit(self):
+        self.repo.add(id="a" * 65)
+        self.assertTrue(any("64" in e for e in self.repo.errors()))
+
+    def test_id_of_64_chars_passes(self):
+        self.repo.add(id="a" * 64)
+        self.assertEqual(self.repo.errors(), [])
+
+    def test_gallery_prefix_is_reserved(self):
+        self.repo.add(id="gallery-x")
+        self.assertTrue(any("gallery-" in e for e in self.repo.errors()))
+
     def test_bad_color_fails(self):
         for bad in ["#12345", "red"]:
             with self.subTest(bad=bad):
