@@ -1,4 +1,8 @@
+import contextlib
 import copy
+import io
+import os
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -123,6 +127,132 @@ class CatalogTests(unittest.TestCase):
         self.repo.add(colors=colors)
         self.assertEqual(self.repo.errors(), [])
         self.assertTrue(any("example" in w and "contrast" in w for w in self.repo.warnings()))
+
+
+class LicenseFilePathTests(unittest.TestCase):
+    def setUp(self):
+        self.repo = Repo()
+        self.addCleanup(self.repo._tmp.cleanup)
+
+    def assert_rejected(self, path):
+        self.repo.add(credit={**CREDIT, "license_file": path})
+        self.assertTrue(any("license_file" in e for e in self.repo.errors()), path)
+
+    def test_path_outside_licenses_fails(self):
+        self.assert_rejected("README.md")
+
+    def test_dotdot_escape_fails(self):
+        outside = self.repo.root.parent / "outside-license.txt"
+        outside.write_text("x")
+        self.addCleanup(outside.unlink)
+        self.assert_rejected("../outside-license.txt")
+        self.assert_rejected("LICENSES/../README.md")
+
+    def test_absolute_path_fails(self):
+        self.assert_rejected(str(self.repo.root / "LICENSES/example-MIT.txt") + "x")
+        self.assert_rejected("/etc/hosts")
+
+
+def git(root, *args):
+    env = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@example.org",
+           "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@example.org"}
+    subprocess.run(["git", "-C", str(root), *args], check=True, capture_output=True, env=env)
+
+
+def run_versions(root, ref):
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        rc = catalog.cmd_versions(root, ref)
+    return rc, buf.getvalue()
+
+
+class VersionsCommandTests(unittest.TestCase):
+    def setUp(self):
+        self.repo = Repo()
+        self.addCleanup(self.repo._tmp.cleanup)
+        self.root = self.repo.root
+        git(self.root, "init", "-q", "-b", "main")
+        git(self.root, "add", "-A")
+        git(self.root, "commit", "-q", "-m", "base")
+
+    def test_ref_without_catalog_passes_bootstrap(self):
+        self.repo.add()
+        (self.root / "catalog.toml").write_text(catalog.build_catalog(self.root))
+        self.assertEqual(run_versions(self.root, "main")[0], 0)
+
+    def test_unresolvable_ref_fails(self):
+        (self.root / "catalog.toml").write_text("format = 1\n")
+        rc, out = run_versions(self.root, "origin/does-not-exist")
+        self.assertEqual(rc, 1)
+        self.assertIn("cannot resolve", out)
+
+    def test_not_a_git_repo_fails(self):
+        with tempfile.TemporaryDirectory() as d:
+            (Path(d) / "catalog.toml").write_text("format = 1\n")
+            self.assertEqual(run_versions(Path(d), "main")[0], 1)
+
+
+class RegistryTests(unittest.TestCase):
+    def setUp(self):
+        self.repo = Repo()
+        self.addCleanup(self.repo._tmp.cleanup)
+        self.root = self.repo.root
+
+    def build(self):
+        self.assertEqual(catalog.cmd_build(self.root), 0)
+
+    def check(self):
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            rc = catalog.cmd_check(self.root)
+        return rc, buf.getvalue()
+
+    def test_build_writes_sorted_ids_and_check_passes(self):
+        self.repo.add("zeta")
+        self.repo.add("alpha")
+        self.build()
+        self.assertEqual((self.root / "ids.txt").read_text(), "alpha\nzeta\n")
+        self.assertEqual(self.check()[0], 0)
+
+    def test_stale_ids_fails_check(self):
+        self.repo.add("alpha")
+        self.build()
+        self.repo.add("beta")
+        (self.root / "catalog.toml").write_text(catalog.build_catalog(self.root))
+        rc, out = self.check()
+        self.assertEqual(rc, 1)
+        self.assertIn("ids.txt is stale", out)
+
+    def test_deleted_theme_fails_and_build_never_drops_id(self):
+        self.repo.add("alpha")
+        self.repo.add("beta")
+        self.build()
+        (self.root / "themes/beta.toml").unlink()
+        rc, out = self.check()
+        self.assertEqual(rc, 1)
+        self.assertIn("withdrawn", out)
+        self.assertEqual(catalog.cmd_build(self.root), 1)
+        self.assertIn("beta", (self.root / "ids.txt").read_text())
+
+    def test_withdrawn_theme_stays_valid(self):
+        self.repo.add("alpha")
+        self.build()
+        path = self.root / "themes/alpha.toml"
+        path.write_text(path.read_text().replace('variant = "dark"',
+                                                 'variant = "dark"\nwithdrawn = true'))
+        self.build()
+        self.assertEqual(self.check()[0], 0)
+
+    def test_reused_id_caught_via_ids_registry(self):
+        base_ids = ["alpha", "beta"]
+        base = {"alpha": {"id": "alpha", "version": 1}}  # beta was removed from the catalog
+        cur = {"alpha": {"id": "alpha", "version": 1}, "beta": {"id": "beta", "version": 1}}
+        errors = catalog.check_versions(base, cur, base_ids, base_ids)
+        self.assertTrue(any("beta" in e and "reused" in e for e in errors))
+
+    def test_dropped_registry_id_fails_versions(self):
+        errors = catalog.check_versions({}, {}, ["alpha", "beta"], ["alpha"])
+        self.assertTrue(any("beta" in e for e in errors))
 
 
 if __name__ == "__main__":

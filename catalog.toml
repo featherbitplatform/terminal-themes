@@ -35,5 +35,5 @@ url = "https://github.com/catppuccin/catppuccin"
 license = "MIT"
 copyright = "Copyright (c) 2021 Catppuccin"
 license_file = "LICENSES/catppuccin-MIT.txt"
-description = "Soothing pastel theme, Mocha flavor."
+description = "Soothing pastel theme, Mocha flavor. Selection uses Surface 2, since fbterm draws selected text in the normal foreground."
 derived = false
