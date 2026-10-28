@@ -5,6 +5,7 @@ import os
 import subprocess
 import tempfile
 import unittest
+import tomllib
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -27,11 +28,11 @@ def theme_text(id="example", credit=None, colors=None, version=1, name="Example"
     credit = dict(CREDIT if credit is None else credit)
     colors = colors or {k: "#%02x%02x%02x" % ((i * 11) % 256, 40, 200 - i * 3)
                         for i, k in enumerate(COLOR_KEYS)}
-    out = [f'name = "{name}"', f'id = "{id}"', f"version = {version}", 'variant = "dark"', "",
+    out = [f"name = {catalog.q(name)}", f'id = "{id}"', f"version = {version}", 'variant = "dark"', "",
            "[colors]"]
     out += [f'{k} = "{v}"' for k, v in colors.items()]
     out += ["", "[credit]"]
-    out += [f'{k} = "{v}"' for k, v in credit.items()]
+    out += [f"{k} = {catalog.q(v)}" for k, v in credit.items()]
     out += [f"derived = {'true' if derived else 'false'}", ""]
     return "\n".join(out)
 
@@ -316,3 +317,35 @@ class PreviewTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TomlStringTests(unittest.TestCase):
+    def test_every_string_reads_back_unchanged(self):
+        for s in ["Nord", 'say "hi"', "back\\slash", "tab\there", "two\nlines",
+                  "del\x7fchar", "ctrl\x01char", "café", "emoji \U0001F600"]:
+            with self.subTest(s=s):
+                self.assertEqual(tomllib.loads(f"k = {catalog.q(s)}")["k"], s)
+
+
+class HiddenCharacterTests(unittest.TestCase):
+    def setUp(self):
+        self.repo = Repo()
+        self.addCleanup(self.repo._tmp.cleanup)
+
+    def test_hidden_characters_in_credit_fail(self):
+        for c in ["\x7f", "\x1b", "‮", "​", "﻿", "⁠", "­"]:
+            with self.subTest(c=repr(c)):
+                self.repo.add(credit={**CREDIT, "author": f"A{c}B"})
+                self.assertTrue(any("credit.author" in e and "invisible" in e
+                                    for e in self.repo.errors()), self.repo.errors())
+
+    def test_newline_allowed_in_description_only(self):
+        self.repo.add(credit={**CREDIT, "description": "line one\nline two"})
+        self.assertEqual(self.repo.errors(), [])
+        self.repo.add(credit={**CREDIT, "author": "A\nB"})
+        self.assertTrue(any("credit.author" in e for e in self.repo.errors()))
+
+    def test_hidden_character_in_name_fails(self):
+        self.repo.add(name="Bad‮Name")
+        self.assertTrue(any(e.endswith("(U+202E)") and "name" in e
+                            for e in self.repo.errors()), self.repo.errors())

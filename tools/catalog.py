@@ -8,7 +8,6 @@ Standard library only (Python 3.11+).
     python3 tools/catalog.py versions <ref>   fail if an id vanished or a changed theme kept its version
     python3 tools/catalog.py previews         write previews/derived.svg (every derived = true theme)
 """
-import json
 import re
 import subprocess
 import sys
@@ -115,6 +114,12 @@ def validate_theme(root, stem, t):
         v = credit.get(k)
         if not isinstance(v, str) or not v.strip():
             err(f"credit.{k} is required and must be non-empty")
+        elif (c := hidden_char(v, allow_newline=k == "description")) is not None:
+            err(f"credit.{k} contains a control or invisible character (U+{ord(c):04X})")
+    for k in ("name", "font_family"):
+        v = t.get(k)
+        if isinstance(v, str) and (c := hidden_char(v)) is not None:
+            err(f"{k} contains a control or invisible character (U+{ord(c):04X})")
     if "derived" in credit and not isinstance(credit["derived"], bool):
         err("credit.derived must be a boolean")
     lic = credit.get("license")
@@ -148,8 +153,39 @@ def validate(root):
     return errors, warnings
 
 
+# Escapes of a TOML basic string; every other control character, and DEL, as \uXXXX.
+TOML_ESCAPES = {'"': '\\"', "\\": "\\\\", "\b": "\\b", "\t": "\\t", "\n": "\\n",
+                "\f": "\\f", "\r": "\\r"}
+
+
 def q(s):
-    return json.dumps(s, ensure_ascii=False)
+    """`s` as a TOML basic string that tomllib reads back unchanged."""
+    out = []
+    for c in s:
+        if c in TOML_ESCAPES:
+            out.append(TOML_ESCAPES[c])
+        elif ord(c) < 0x20 or ord(c) == 0x7F:
+            out.append(f"\\u{ord(c):04x}")
+        else:
+            out.append(c)
+    return '"' + "".join(out) + '"'
+
+
+# Characters the app refuses in displayed theme text (control, bidi and invisible format
+# characters), so a theme carrying one would never show in the gallery.
+HIDDEN_RANGES = [(0x00AD, 0x00AD), (0x061C, 0x061C), (0x180E, 0x180E), (0x200B, 0x200F),
+                 (0x2028, 0x202E), (0x2060, 0x2060), (0x2066, 0x2069), (0xFEFF, 0xFEFF)]
+
+
+def hidden_char(s, allow_newline=False):
+    """The first character of `s` the app would refuse, if any."""
+    for c in s:
+        if allow_newline and c == "\n":
+            continue
+        o = ord(c)
+        if o < 0x20 or 0x7F <= o <= 0x9F or any(a <= o <= b for a, b in HIDDEN_RANGES):
+            return c
+    return None
 
 
 def scalar(v):
@@ -268,8 +304,13 @@ def cmd_check(root):
     if not errors:
         errors += registry_errors(root)
     if not errors:
+        built = build_catalog(root)
+        try:
+            tomllib.loads(built)
+        except tomllib.TOMLDecodeError as e:
+            errors.append(f"the generated catalog is not valid TOML: {e}")
         cat = root / "catalog.toml"
-        if not cat.is_file() or cat.read_text(encoding="utf-8") != build_catalog(root):
+        if not cat.is_file() or cat.read_text(encoding="utf-8") != built:
             errors.append("catalog.toml is stale: run python3 tools/catalog.py build")
         if (root / "README.md").read_text(encoding="utf-8") != render_readme(root):
             errors.append("README.md theme table is stale: run python3 tools/catalog.py build")
