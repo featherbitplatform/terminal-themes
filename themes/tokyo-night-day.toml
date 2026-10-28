@@ -1,6 +1,6 @@
 name = "Tokyo Night Day"
 id = "tokyo-night-day"
-version = 1
+version = 2
 variant = "light"
 
 [colors]
@@ -31,6 +31,6 @@ author = "Enkia; Folke Lemaitre (tokyonight.nvim)"
 url = "https://github.com/folke/tokyonight.nvim"
 license = "Apache-2.0"
 copyright = "Copyright (c) 2018-present Enkia"
-license_file = "LICENSES/tokyonight-nvim-Apache-2.0.txt"
-description = "Tokyo Night, Day style. Terminal colors from tokyonight.nvim by Folke Lemaitre (Apache-2.0), which extends Enkia's Tokyo Night palette (MIT): its day style's terminal colors, foreground, background, cursor (the foreground) and visual selection. The Apache-2.0 source has no NOTICE file; the Enkia MIT license is in LICENSES/tokyo-night-MIT.txt."
+license_file = "LICENSES/tokyo-night-storm-day.txt"
+description = "Tokyo Night, Day style. Terminal colors from tokyonight.nvim by Folke Lemaitre (Apache-2.0), which extends Enkia's Tokyo Night palette (MIT): its day style's terminal colors, foreground, background, cursor (the foreground) and visual selection. Both licenses, MIT for the Enkia palette and Apache-2.0 for the terminal colors, are in the license file."
 derived = false
