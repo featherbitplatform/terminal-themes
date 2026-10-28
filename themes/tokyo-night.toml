@@ -1,0 +1,36 @@
+name = "Tokyo Night"
+id = "tokyo-night"
+version = 1
+variant = "dark"
+
+[colors]
+foreground = "#787c99"
+background = "#16161e"
+cursor = "#c0caf5"
+selection = "#282b3b"
+black = "#363b54"
+red = "#f7768e"
+green = "#73daca"
+yellow = "#e0af68"
+blue = "#7aa2f7"
+magenta = "#bb9af7"
+cyan = "#7dcfff"
+white = "#787c99"
+bright_black = "#363b54"
+bright_red = "#f7768e"
+bright_green = "#73daca"
+bright_yellow = "#e0af68"
+bright_blue = "#7aa2f7"
+bright_magenta = "#bb9af7"
+bright_cyan = "#7dcfff"
+bright_white = "#acb0d0"
+
+[credit]
+project = "Tokyo Night"
+author = "Enkia"
+url = "https://github.com/enkia/tokyo-night-vscode-theme"
+license = "MIT"
+copyright = "Copyright (c) 2018-present Enkia"
+license_file = "LICENSES/tokyo-night-MIT.txt"
+description = "A clean dark theme that celebrates the lights of downtown Tokyo at night. Foreground, background and the 16 colors are the theme's terminal colors; cursor is its editor cursor, and selection is its translucent terminal selection blended onto the background."
+derived = false

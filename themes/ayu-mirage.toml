@@ -1,0 +1,36 @@
+name = "Ayu Mirage"
+id = "ayu-mirage"
+version = 1
+variant = "dark"
+
+[colors]
+foreground = "#cccac2"
+background = "#242936"
+cursor = "#ffcc66"
+selection = "#2b4768"
+black = "#0a0000"
+red = "#f06b5c"
+green = "#bfe76d"
+yellow = "#e6b752"
+blue = "#3bbbf4"
+magenta = "#d09ffd"
+cyan = "#84ceb5"
+white = "#d2d6dc"
+bright_black = "#0a0000"
+bright_red = "#f39184"
+bright_green = "#d5ff80"
+bright_yellow = "#ffcd66"
+bright_blue = "#73d0ff"
+bright_magenta = "#dfbfff"
+bright_cyan = "#95e6cb"
+bright_white = "#e3e6ea"
+
+[credit]
+project = "Ayu"
+author = "Konstantin Pschera"
+url = "https://github.com/ayu-theme/ayu-colors"
+license = "MIT"
+copyright = "Copyright (c) Konstantin Pschera <me@kons.ch> (kons.ch)"
+license_file = "LICENSES/ayu-MIT.txt"
+description = "Simple theme with bright colors, Mirage variant. The 16 colors are the palette's own terminal colors (ayu 9.1.0); foreground and background are the editor colors, cursor is the accent, and selection is the translucent editor selection blended onto the background."
+derived = false

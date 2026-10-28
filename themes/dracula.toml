@@ -1,0 +1,36 @@
+name = "Dracula"
+id = "dracula"
+version = 1
+variant = "dark"
+
+[colors]
+foreground = "#f8f8f2"
+background = "#282a36"
+cursor = "#f8f8f2"
+selection = "#44475a"
+black = "#21222c"
+red = "#ff5555"
+green = "#50fa7b"
+yellow = "#f1fa8c"
+blue = "#bd93f9"
+magenta = "#ff79c6"
+cyan = "#8be9fd"
+white = "#f8f8f2"
+bright_black = "#6272a4"
+bright_red = "#ff6e6e"
+bright_green = "#69ff94"
+bright_yellow = "#ffffa5"
+bright_blue = "#d6acff"
+bright_magenta = "#ff92df"
+bright_cyan = "#a4ffff"
+bright_white = "#ffffff"
+
+[credit]
+project = "Dracula"
+author = "Dracula Theme"
+url = "https://github.com/dracula/dracula-theme"
+license = "MIT"
+copyright = "Copyright (c) 2023 Dracula Theme"
+license_file = "LICENSES/dracula-MIT.txt"
+description = "Dark theme for vampires. The 16 colors are the specification's ANSI colors; background, foreground and selection are its palette's, and the cursor is the foreground (the specification names no cursor color)."
+derived = false

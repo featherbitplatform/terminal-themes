@@ -1,6 +1,6 @@
 name = "Catppuccin Mocha"
 id = "catppuccin-mocha"
-version = 1
+version = 2
 variant = "dark"
 
 [colors]
@@ -15,15 +15,15 @@ yellow = "#f9e2af"
 blue = "#89b4fa"
 magenta = "#f5c2e7"
 cyan = "#94e2d5"
-white = "#bac2de"
+white = "#a6adc8"
 bright_black = "#585b70"
-bright_red = "#f38ba8"
-bright_green = "#a6e3a1"
-bright_yellow = "#f9e2af"
-bright_blue = "#89b4fa"
-bright_magenta = "#f5c2e7"
-bright_cyan = "#94e2d5"
-bright_white = "#a6adc8"
+bright_red = "#f37799"
+bright_green = "#89d88b"
+bright_yellow = "#ebd391"
+bright_blue = "#74a8fc"
+bright_magenta = "#f2aede"
+bright_cyan = "#6bd7ca"
+bright_white = "#bac2de"
 
 [credit]
 project = "Catppuccin"
@@ -32,5 +32,5 @@ url = "https://github.com/catppuccin/catppuccin"
 license = "MIT"
 copyright = "Copyright (c) 2021 Catppuccin"
 license_file = "LICENSES/catppuccin-MIT.txt"
-description = "Soothing pastel theme, Mocha flavor. Selection uses Surface 2, since fbterm draws selected text in the normal foreground."
+description = "Soothing pastel theme, Mocha flavor. The 16 colors are the palette's official ANSI colors and the cursor is Rosewater; selection uses Surface 2, since fbterm draws selected text in the normal foreground."
 derived = false

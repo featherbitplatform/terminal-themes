@@ -1,0 +1,36 @@
+name = "One Light"
+id = "one-light"
+version = 1
+variant = "light"
+
+[colors]
+foreground = "#383a42"
+background = "#fafafa"
+cursor = "#526fff"
+selection = "#e5e5e6"
+black = "#383a42"
+red = "#e45649"
+green = "#50a14f"
+yellow = "#cb7701"
+blue = "#4078f2"
+magenta = "#a626a4"
+cyan = "#0184bc"
+white = "#a0a1a7"
+bright_black = "#696c77"
+bright_red = "#e45649"
+bright_green = "#50a14f"
+bright_yellow = "#cb7701"
+bright_blue = "#4078f2"
+bright_magenta = "#a626a4"
+bright_cyan = "#0184bc"
+bright_white = "#fafafa"
+
+[credit]
+project = "One Dark and One Light"
+author = "GitHub Inc."
+url = "https://github.com/atom/atom/tree/master/packages/one-light-syntax"
+license = "MIT"
+copyright = "Copyright (c) 2016 GitHub Inc."
+license_file = "LICENSES/atom-one-MIT.txt"
+description = "Light syntax theme from the Atom editor. The palette has no terminal colors; fbterm's mapping: black is mono-1 (the text color), bright black is mono-2, white is mono-3, bright white is the background, and red, green, yellow, blue, magenta and cyan are hue-5, hue-4, hue-6-2, hue-2, hue-3 and hue-1 in both normal and bright. Cursor and selection are the theme's own."
+derived = true

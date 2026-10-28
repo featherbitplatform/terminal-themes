@@ -1,0 +1,36 @@
+name = "Tokyo Night Day"
+id = "tokyo-night-day"
+version = 1
+variant = "light"
+
+[colors]
+foreground = "#3760bf"
+background = "#e1e2e7"
+cursor = "#3760bf"
+selection = "#b7c1e3"
+black = "#b4b5b9"
+red = "#f52a65"
+green = "#587539"
+yellow = "#8c6c3e"
+blue = "#2e7de9"
+magenta = "#9854f1"
+cyan = "#007197"
+white = "#6172b0"
+bright_black = "#a1a6c5"
+bright_red = "#ff4774"
+bright_green = "#5c8524"
+bright_yellow = "#a27629"
+bright_blue = "#358aff"
+bright_magenta = "#a463ff"
+bright_cyan = "#007ea8"
+bright_white = "#3760bf"
+
+[credit]
+project = "Tokyo Night"
+author = "Enkia; Folke Lemaitre (tokyonight.nvim)"
+url = "https://github.com/folke/tokyonight.nvim"
+license = "Apache-2.0"
+copyright = "Copyright (c) 2018-present Enkia"
+license_file = "LICENSES/tokyonight-nvim-Apache-2.0.txt"
+description = "Tokyo Night, Day style. Terminal colors from tokyonight.nvim by Folke Lemaitre (Apache-2.0), which extends Enkia's Tokyo Night palette (MIT): its day style's terminal colors, foreground, background, cursor (the foreground) and visual selection. The Apache-2.0 source has no NOTICE file; the Enkia MIT license is in LICENSES/tokyo-night-MIT.txt."
+derived = false

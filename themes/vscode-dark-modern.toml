@@ -1,0 +1,36 @@
+name = "VS Code Dark Modern"
+id = "vscode-dark-modern"
+version = 1
+variant = "dark"
+
+[colors]
+foreground = "#cccccc"
+background = "#181818"
+cursor = "#cccccc"
+selection = "#264f78"
+black = "#000000"
+red = "#cd3131"
+green = "#0dbc79"
+yellow = "#e5e510"
+blue = "#2472c8"
+magenta = "#bc3fbc"
+cyan = "#11a8cd"
+white = "#e5e5e5"
+bright_black = "#666666"
+bright_red = "#f14c4c"
+bright_green = "#23d18b"
+bright_yellow = "#f5f543"
+bright_blue = "#3b8eea"
+bright_magenta = "#d670d6"
+bright_cyan = "#29b8db"
+bright_white = "#e5e5e5"
+
+[credit]
+project = "Visual Studio Code default themes"
+author = "Microsoft Corporation"
+url = "https://github.com/microsoft/vscode/tree/main/extensions/theme-defaults"
+license = "MIT"
+copyright = "Copyright (c) 2015 - present Microsoft Corporation"
+license_file = "LICENSES/vscode-MIT.txt"
+description = "The 16 colors are VS Code's default terminal colors, which this theme does not override. Background is the theme's panel background, where the terminal is drawn; foreground is the theme's terminal foreground, cursor follows it, and selection is the default editor selection."
+derived = false

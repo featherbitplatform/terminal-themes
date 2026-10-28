@@ -26,7 +26,9 @@ when you open the theme gallery and press Refresh, Install or Update; nothing el
 ## Adding a theme
 
 1. Add `themes/<id>.toml` and the license text under `LICENSES/`.
-2. Run `python3 tools/catalog.py build` to regenerate `catalog.toml` and the table below.
+2. Run `python3 tools/catalog.py build` to regenerate `catalog.toml`, the table below and
+   `previews/derived.svg` (a swatch row for every theme with `derived = true`, where the 16
+   colors are this repository's mapping of a palette; `previews` redraws only that file).
 3. Run the checks (Python 3.11 or newer, standard library only):
 
    ```
@@ -43,7 +45,36 @@ when you open the theme gallery and press Refresh, Install or Update; nothing el
 <!-- themes:start -->
 | Theme | Variant | Project | Author | License |
 |---|---|---|---|---|
+| Ayu Dark | dark | [Ayu](https://github.com/ayu-theme/ayu-colors) | Konstantin Pschera | MIT |
+| Ayu Light | light | [Ayu](https://github.com/ayu-theme/ayu-colors) | Konstantin Pschera | MIT |
+| Ayu Mirage | dark | [Ayu](https://github.com/ayu-theme/ayu-colors) | Konstantin Pschera | MIT |
+| Catppuccin Frappé | dark | [Catppuccin](https://github.com/catppuccin/catppuccin) | Catppuccin | MIT |
+| Catppuccin Latte | light | [Catppuccin](https://github.com/catppuccin/catppuccin) | Catppuccin | MIT |
+| Catppuccin Macchiato | dark | [Catppuccin](https://github.com/catppuccin/catppuccin) | Catppuccin | MIT |
 | Catppuccin Mocha | dark | [Catppuccin](https://github.com/catppuccin/catppuccin) | Catppuccin | MIT |
+| Dracula | dark | [Dracula](https://github.com/dracula/dracula-theme) | Dracula Theme | MIT |
+| Everforest Dark | dark | [Everforest](https://github.com/sainnhe/everforest) | sainnhe | MIT |
+| Everforest Light | light | [Everforest](https://github.com/sainnhe/everforest) | sainnhe | MIT |
+| GitHub Dark | dark | [GitHub Theme](https://github.com/primer/github-vscode-theme) | Primer | MIT |
+| GitHub Light | light | [GitHub Theme](https://github.com/primer/github-vscode-theme) | Primer | MIT |
+| Gruvbox Dark | dark | [Gruvbox](https://github.com/morhetz/gruvbox) | Pavel Pertsev (morhetz) | MIT |
+| Gruvbox Light | light | [Gruvbox](https://github.com/morhetz/gruvbox) | Pavel Pertsev (morhetz) | MIT |
+| Kanagawa | dark | [Kanagawa](https://github.com/rebelot/kanagawa.nvim) | Tommaso Laurenzi | MIT |
+| Nord | dark | [Nord](https://github.com/nordtheme/nord) | Sven Greb | MIT |
+| One Dark | dark | [One Dark and One Light](https://github.com/atom/atom/tree/master/packages/one-dark-syntax) | GitHub Inc. | MIT |
+| One Light | light | [One Dark and One Light](https://github.com/atom/atom/tree/master/packages/one-light-syntax) | GitHub Inc. | MIT |
+| Rosé Pine | dark | [Rosé Pine](https://github.com/rose-pine/rose-pine-theme) | Rosé Pine | MIT |
+| Rosé Pine Dawn | light | [Rosé Pine](https://github.com/rose-pine/rose-pine-theme) | Rosé Pine | MIT |
+| Rosé Pine Moon | dark | [Rosé Pine](https://github.com/rose-pine/rose-pine-theme) | Rosé Pine | MIT |
+| Solarized Dark | dark | [Solarized](https://github.com/altercation/solarized) | Ethan Schoonover | MIT |
+| Solarized Light | light | [Solarized](https://github.com/altercation/solarized) | Ethan Schoonover | MIT |
+| Tokyo Night | dark | [Tokyo Night](https://github.com/enkia/tokyo-night-vscode-theme) | Enkia | MIT |
+| Tokyo Night Day | light | [Tokyo Night](https://github.com/folke/tokyonight.nvim) | Enkia; Folke Lemaitre (tokyonight.nvim) | Apache-2.0 |
+| Tokyo Night Storm | dark | [Tokyo Night](https://github.com/folke/tokyonight.nvim) | Enkia; Folke Lemaitre (tokyonight.nvim) | Apache-2.0 |
+| VS Code Dark Modern | dark | [Visual Studio Code default themes](https://github.com/microsoft/vscode/tree/main/extensions/theme-defaults) | Microsoft Corporation | MIT |
+| VS Code Dark+ | dark | [Visual Studio Code default themes](https://github.com/microsoft/vscode/tree/main/extensions/theme-defaults) | Microsoft Corporation | MIT |
+| VS Code Light Modern | light | [Visual Studio Code default themes](https://github.com/microsoft/vscode/tree/main/extensions/theme-defaults) | Microsoft Corporation | MIT |
+| VS Code Light+ | light | [Visual Studio Code default themes](https://github.com/microsoft/vscode/tree/main/extensions/theme-defaults) | Microsoft Corporation | MIT |
 <!-- themes:end -->
 
 ## License

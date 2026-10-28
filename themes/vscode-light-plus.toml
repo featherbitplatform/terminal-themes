@@ -1,0 +1,36 @@
+name = "VS Code Light+"
+id = "vscode-light-plus"
+version = 1
+variant = "light"
+
+[colors]
+foreground = "#333333"
+background = "#ffffff"
+cursor = "#333333"
+selection = "#add6ff"
+black = "#000000"
+red = "#cd3131"
+green = "#107c10"
+yellow = "#949800"
+blue = "#0451a5"
+magenta = "#bc05bc"
+cyan = "#0598bc"
+white = "#555555"
+bright_black = "#666666"
+bright_red = "#f14c4c"
+bright_green = "#14ce14"
+bright_yellow = "#b5ba00"
+bright_blue = "#3b8eea"
+bright_magenta = "#d670d6"
+bright_cyan = "#29b8db"
+bright_white = "#a5a5a5"
+
+[credit]
+project = "Visual Studio Code default themes"
+author = "Microsoft Corporation"
+url = "https://github.com/microsoft/vscode/tree/main/extensions/theme-defaults"
+license = "MIT"
+copyright = "Copyright (c) 2015 - present Microsoft Corporation"
+license_file = "LICENSES/vscode-MIT.txt"
+description = "The 16 colors are VS Code's default terminal colors, which this theme does not override. Background is the theme's panel background, where the terminal is drawn; foreground is the default terminal foreground, cursor follows it, and selection is the default editor selection."
+derived = false
