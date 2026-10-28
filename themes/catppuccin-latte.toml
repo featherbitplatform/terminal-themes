@@ -1,0 +1,36 @@
+name = "Catppuccin Latte"
+id = "catppuccin-latte"
+version = 1
+variant = "light"
+
+[colors]
+foreground = "#4c4f69"
+background = "#eff1f5"
+cursor = "#dc8a78"
+selection = "#acb0be"
+black = "#5c5f77"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#acb0be"
+bright_black = "#6c6f85"
+bright_red = "#de293e"
+bright_green = "#49af3d"
+bright_yellow = "#eea02d"
+bright_blue = "#456eff"
+bright_magenta = "#fe85d8"
+bright_cyan = "#2d9fa8"
+bright_white = "#bcc0cc"
+
+[credit]
+project = "Catppuccin"
+author = "Catppuccin"
+url = "https://github.com/catppuccin/catppuccin"
+license = "MIT"
+copyright = "Copyright (c) 2021 Catppuccin"
+license_file = "LICENSES/catppuccin-MIT.txt"
+description = "Soothing pastel theme, Latte flavor. The 16 colors are the palette's official ANSI colors and the cursor is Rosewater; selection uses Surface 2, since fbterm draws selected text in the normal foreground."
+derived = false

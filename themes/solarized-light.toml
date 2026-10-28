@@ -1,0 +1,36 @@
+name = "Solarized Light"
+id = "solarized-light"
+version = 1
+variant = "light"
+
+[colors]
+foreground = "#657b83"
+background = "#fdf6e3"
+cursor = "#586e75"
+selection = "#eee8d5"
+black = "#073642"
+red = "#dc322f"
+green = "#859900"
+yellow = "#b58900"
+blue = "#268bd2"
+magenta = "#d33682"
+cyan = "#2aa198"
+white = "#eee8d5"
+bright_black = "#002b36"
+bright_red = "#cb4b16"
+bright_green = "#586e75"
+bright_yellow = "#657b83"
+bright_blue = "#839496"
+bright_magenta = "#6c71c4"
+bright_cyan = "#93a1a1"
+bright_white = "#fdf6e3"
+
+[credit]
+project = "Solarized"
+author = "Ethan Schoonover"
+url = "https://github.com/altercation/solarized"
+license = "MIT"
+copyright = "Copyright (c) 2011 Ethan Schoonover"
+license_file = "LICENSES/solarized-MIT.txt"
+description = "Precision colors for machines and people, light mode. The 16 colors follow the README's terminal table and background/foreground are base3/base00; cursor is base01 (emphasized content) and selection is base2 (the highlight background)."
+derived = false

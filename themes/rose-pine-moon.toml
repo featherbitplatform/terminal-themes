@@ -1,0 +1,36 @@
+name = "Rosé Pine Moon"
+id = "rose-pine-moon"
+version = 1
+variant = "dark"
+
+[colors]
+foreground = "#e0def4"
+background = "#232136"
+cursor = "#56526e"
+selection = "#44415a"
+black = "#393552"
+red = "#eb6f92"
+green = "#3e8fb0"
+yellow = "#f6c177"
+blue = "#9ccfd8"
+magenta = "#c4a7e7"
+cyan = "#ea9a97"
+white = "#e0def4"
+bright_black = "#6e6a86"
+bright_red = "#eb6f92"
+bright_green = "#3e8fb0"
+bright_yellow = "#f6c177"
+bright_blue = "#9ccfd8"
+bright_magenta = "#c4a7e7"
+bright_cyan = "#ea9a97"
+bright_white = "#e0def4"
+
+[credit]
+project = "Rosé Pine"
+author = "Rosé Pine"
+url = "https://github.com/rose-pine/rose-pine-theme"
+license = "MIT"
+copyright = "Copyright (c) 2023 Rosé Pine"
+license_file = "LICENSES/rose-pine-MIT.txt"
+description = "All natural pine, faux fur and a bit of soho vibes for the classy minimalist. Colors follow the official palette roles: terminal colors as the palette assigns them, Base background, Text foreground, Highlight High cursor and Highlight Med selection."
+derived = false

@@ -1,0 +1,36 @@
+name = "One Dark"
+id = "one-dark"
+version = 1
+variant = "dark"
+
+[colors]
+foreground = "#abb2bf"
+background = "#282c34"
+cursor = "#528bff"
+selection = "#3e4451"
+black = "#3e4451"
+red = "#e06c75"
+green = "#98c379"
+yellow = "#e5c07b"
+blue = "#61afef"
+magenta = "#c678dd"
+cyan = "#56b6c2"
+white = "#abb2bf"
+bright_black = "#5c6370"
+bright_red = "#e06c75"
+bright_green = "#98c379"
+bright_yellow = "#e5c07b"
+bright_blue = "#61afef"
+bright_magenta = "#c678dd"
+bright_cyan = "#56b6c2"
+bright_white = "#abb2bf"
+
+[credit]
+project = "One Dark and One Light"
+author = "GitHub Inc."
+url = "https://github.com/atom/atom/tree/master/packages/one-dark-syntax"
+license = "MIT"
+copyright = "Copyright (c) 2016 GitHub Inc."
+license_file = "LICENSES/atom-one-MIT.txt"
+description = "Dark syntax theme from the Atom editor. The palette has no terminal colors; fbterm's mapping: black is the selection color, bright black is mono-3, white and bright white are mono-1 (the text color), and red, green, yellow, blue, magenta and cyan are hue-5, hue-4, hue-6-2, hue-2, hue-3 and hue-1 in both normal and bright. Cursor and selection are the theme's own."
+derived = true

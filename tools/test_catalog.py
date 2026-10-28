@@ -5,6 +5,7 @@ import os
 import subprocess
 import tempfile
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 import catalog
@@ -21,15 +22,17 @@ CREDIT = {
 }
 
 
-def theme_text(id="example", credit=None, colors=None, version=1):
+def theme_text(id="example", credit=None, colors=None, version=1, name="Example",
+               derived=False):
     credit = dict(CREDIT if credit is None else credit)
     colors = colors or {k: "#%02x%02x%02x" % ((i * 11) % 256, 40, 200 - i * 3)
                         for i, k in enumerate(COLOR_KEYS)}
-    out = [f'name = "Example"', f'id = "{id}"', f"version = {version}", 'variant = "dark"', "",
+    out = [f'name = "{name}"', f'id = "{id}"', f"version = {version}", 'variant = "dark"', "",
            "[colors]"]
     out += [f'{k} = "{v}"' for k, v in colors.items()]
     out += ["", "[credit]"]
-    out += [f'{k} = "{v}"' for k, v in credit.items()] + ["derived = false", ""]
+    out += [f'{k} = "{v}"' for k, v in credit.items()]
+    out += [f"derived = {'true' if derived else 'false'}", ""]
     return "\n".join(out)
 
 
@@ -253,6 +256,37 @@ class RegistryTests(unittest.TestCase):
     def test_dropped_registry_id_fails_versions(self):
         errors = catalog.check_versions({}, {}, ["alpha", "beta"], ["alpha"])
         self.assertTrue(any("beta" in e for e in errors))
+
+
+class PreviewTests(unittest.TestCase):
+    def setUp(self):
+        self.repo = Repo()
+        self.addCleanup(self.repo._tmp.cleanup)
+        self.root = self.repo.root
+
+    def test_previews_writes_svg_with_each_derived_theme(self):
+        self.repo.add("alpha", name="Alpha <Derived> & Co", derived=True)
+        self.repo.add("beta", name="Beta Mapped", derived=True)
+        self.repo.add("gamma", name="Gamma Official")
+        self.assertEqual(catalog.cmd_previews(self.root), 0)
+        path = self.root / "previews/derived.svg"
+        tree = ET.parse(path)
+        svg = tree.getroot()
+        self.assertEqual(svg.tag, "{http://www.w3.org/2000/svg}svg")
+        texts = [t.text for t in svg.iter("{http://www.w3.org/2000/svg}text")]
+        self.assertIn("Alpha <Derived> & Co", texts)
+        self.assertIn("Beta Mapped", texts)
+        self.assertNotIn("Gamma Official", texts)
+        fills = {r.get("fill") for r in svg.iter("{http://www.w3.org/2000/svg}rect")}
+        for color in ("#0b28c5", "#0028c8", "#1628c2", "#2128bf", "#2c28bc", "#d1288f"):
+            self.assertIn(color, fills)
+
+    def test_previews_is_deterministic(self):
+        self.repo.add("alpha", derived=True)
+        catalog.cmd_previews(self.root)
+        first = (self.root / "previews/derived.svg").read_bytes()
+        catalog.cmd_previews(self.root)
+        self.assertEqual((self.root / "previews/derived.svg").read_bytes(), first)
 
 
 if __name__ == "__main__":

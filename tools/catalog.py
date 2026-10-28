@@ -6,12 +6,14 @@ Standard library only (Python 3.11+).
     python3 tools/catalog.py check            validate; fail if catalog.toml, ids.txt or README is stale
     python3 tools/catalog.py build            rewrite catalog.toml, ids.txt and the README table
     python3 tools/catalog.py versions <ref>   fail if an id vanished or a changed theme kept its version
+    python3 tools/catalog.py previews         write previews/derived.svg (every derived = true theme)
 """
 import json
 import re
 import subprocess
 import sys
 import tomllib
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ALLOWED_LICENSES = ["MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC",
@@ -324,6 +326,62 @@ def cmd_versions(root, ref):
     return 1 if errors else 0
 
 
+SVG_NS = "http://www.w3.org/2000/svg"
+PREVIEW_SLOTS = ["background", "foreground", "cursor", "selection"] + COLOR_KEYS[4:]
+SWATCH, GAP, LABEL_W, ROW_H, PAD = 28, 4, 230, 44, 16
+
+
+def preview_svg(themes):
+    """One row per theme on its own background: name (in the foreground) and id, then
+    swatches of background, foreground, cursor, selection and the 16 colors."""
+    ET.register_namespace("", SVG_NS)
+    rows = [themes[tid] for tid in sorted(themes)]
+    swatches_w = len(PREVIEW_SLOTS) * (SWATCH + GAP)
+    width = PAD * 2 + LABEL_W + swatches_w
+    height = PAD * 2 + 24 + ROW_H * len(rows)
+    svg = ET.Element(f"{{{SVG_NS}}}svg", {
+        "width": str(width), "height": str(height), "viewBox": f"0 0 {width} {height}",
+        "font-family": "monospace", "font-size": "12"})
+
+    def el(parent, tag, text=None, **attrs):
+        e = ET.SubElement(parent, f"{{{SVG_NS}}}{tag}",
+                          {k.replace("_", "-"): str(v) for k, v in attrs.items()})
+        e.text = text
+        return e
+
+    el(svg, "rect", x=0, y=0, width=width, height=height, fill="#ffffff")
+    header = "Derived themes: background, foreground, cursor, selection, 16 colors"
+    el(svg, "text", header, x=PAD, y=PAD + 12, fill="#000000")
+    for i, t in enumerate(rows):
+        y = PAD + 24 + i * ROW_H
+        c = t["colors"]
+        el(svg, "rect", x=PAD, y=y, width=LABEL_W + swatches_w, height=ROW_H - GAP,
+           fill=c["background"])
+        el(svg, "text", t["name"], x=PAD + 8, y=y + 16, fill=c["foreground"])
+        el(svg, "text", t["id"], x=PAD + 8, y=y + 32, fill=c["bright_black"])
+        for j, slot in enumerate(PREVIEW_SLOTS):
+            el(svg, "rect", x=PAD + LABEL_W + j * (SWATCH + GAP), y=y + 6, width=SWATCH,
+               height=ROW_H - GAP - 12, fill=c[slot], stroke=c["foreground"],
+               stroke_width="0.5")
+    ET.indent(svg)
+    return ET.tostring(svg, encoding="unicode", xml_declaration=True) + "\n"
+
+
+def cmd_previews(root):
+    errors, _ = validate(root)
+    if errors:
+        for e in errors:
+            print(f"error: {e}")
+        return 1
+    themes, _ = load_themes(root)
+    derived = {k: t for k, t in themes.items() if t["credit"].get("derived") is True}
+    out = root / "previews" / "derived.svg"
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(preview_svg(derived), encoding="utf-8")
+    print(f"wrote {out.relative_to(root)} ({len(derived)} themes)")
+    return 0
+
+
 def main(argv):
     if len(argv) >= 2 and argv[1] == "check":
         return cmd_check(ROOT)
@@ -331,6 +389,8 @@ def main(argv):
         return cmd_build(ROOT)
     if len(argv) == 3 and argv[1] == "versions":
         return cmd_versions(ROOT, argv[2])
+    if len(argv) >= 2 and argv[1] == "previews":
+        return cmd_previews(ROOT)
     print(__doc__)
     return 2
 

@@ -1,0 +1,36 @@
+name = "Ayu Dark"
+id = "ayu-dark"
+version = 1
+variant = "dark"
+
+[colors]
+foreground = "#bfbdb6"
+background = "#10141c"
+cursor = "#e6b450"
+selection = "#193155"
+black = "#0a0000"
+red = "#e6495a"
+green = "#97c142"
+yellow = "#e89d37"
+blue = "#17acf2"
+magenta = "#c385fe"
+cyan = "#84ceb5"
+white = "#ffffff"
+bright_black = "#0a0000"
+bright_red = "#f07178"
+bright_green = "#aad94c"
+bright_yellow = "#ffb454"
+bright_blue = "#59c2ff"
+bright_magenta = "#d2a6ff"
+bright_cyan = "#95e6cb"
+bright_white = "#ffffff"
+
+[credit]
+project = "Ayu"
+author = "Konstantin Pschera"
+url = "https://github.com/ayu-theme/ayu-colors"
+license = "MIT"
+copyright = "Copyright (c) Konstantin Pschera <me@kons.ch> (kons.ch)"
+license_file = "LICENSES/ayu-MIT.txt"
+description = "Simple theme with bright colors, Dark variant. The 16 colors are the palette's own terminal colors (ayu 9.1.0); foreground and background are the editor colors, cursor is the accent, and selection is the translucent editor selection blended onto the background."
+derived = false

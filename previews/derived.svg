@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" width="902" height="144" viewBox="0 0 902 144" font-family="monospace" font-size="12">
+  <rect x="0" y="0" width="902" height="144" fill="#ffffff" />
+  <text x="16" y="28" fill="#000000">Derived themes: background, foreground, cursor, selection, 16 colors</text>
+  <rect x="16" y="40" width="870" height="40" fill="#282c34" />
+  <text x="24" y="56" fill="#abb2bf">One Dark</text>
+  <text x="24" y="72" fill="#5c6370">one-dark</text>
+  <rect x="246" y="46" width="28" height="28" fill="#282c34" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="278" y="46" width="28" height="28" fill="#abb2bf" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="310" y="46" width="28" height="28" fill="#528bff" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="342" y="46" width="28" height="28" fill="#3e4451" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="374" y="46" width="28" height="28" fill="#3e4451" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="406" y="46" width="28" height="28" fill="#e06c75" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="438" y="46" width="28" height="28" fill="#98c379" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="470" y="46" width="28" height="28" fill="#e5c07b" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="502" y="46" width="28" height="28" fill="#61afef" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="534" y="46" width="28" height="28" fill="#c678dd" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="566" y="46" width="28" height="28" fill="#56b6c2" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="598" y="46" width="28" height="28" fill="#abb2bf" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="630" y="46" width="28" height="28" fill="#5c6370" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="662" y="46" width="28" height="28" fill="#e06c75" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="694" y="46" width="28" height="28" fill="#98c379" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="726" y="46" width="28" height="28" fill="#e5c07b" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="758" y="46" width="28" height="28" fill="#61afef" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="790" y="46" width="28" height="28" fill="#c678dd" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="822" y="46" width="28" height="28" fill="#56b6c2" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="854" y="46" width="28" height="28" fill="#abb2bf" stroke="#abb2bf" stroke-width="0.5" />
+  <rect x="16" y="84" width="870" height="40" fill="#fafafa" />
+  <text x="24" y="100" fill="#383a42">One Light</text>
+  <text x="24" y="116" fill="#696c77">one-light</text>
+  <rect x="246" y="90" width="28" height="28" fill="#fafafa" stroke="#383a42" stroke-width="0.5" />
+  <rect x="278" y="90" width="28" height="28" fill="#383a42" stroke="#383a42" stroke-width="0.5" />
+  <rect x="310" y="90" width="28" height="28" fill="#526fff" stroke="#383a42" stroke-width="0.5" />
+  <rect x="342" y="90" width="28" height="28" fill="#e5e5e6" stroke="#383a42" stroke-width="0.5" />
+  <rect x="374" y="90" width="28" height="28" fill="#383a42" stroke="#383a42" stroke-width="0.5" />
+  <rect x="406" y="90" width="28" height="28" fill="#e45649" stroke="#383a42" stroke-width="0.5" />
+  <rect x="438" y="90" width="28" height="28" fill="#50a14f" stroke="#383a42" stroke-width="0.5" />
+  <rect x="470" y="90" width="28" height="28" fill="#cb7701" stroke="#383a42" stroke-width="0.5" />
+  <rect x="502" y="90" width="28" height="28" fill="#4078f2" stroke="#383a42" stroke-width="0.5" />
+  <rect x="534" y="90" width="28" height="28" fill="#a626a4" stroke="#383a42" stroke-width="0.5" />
+  <rect x="566" y="90" width="28" height="28" fill="#0184bc" stroke="#383a42" stroke-width="0.5" />
+  <rect x="598" y="90" width="28" height="28" fill="#a0a1a7" stroke="#383a42" stroke-width="0.5" />
+  <rect x="630" y="90" width="28" height="28" fill="#696c77" stroke="#383a42" stroke-width="0.5" />
+  <rect x="662" y="90" width="28" height="28" fill="#e45649" stroke="#383a42" stroke-width="0.5" />
+  <rect x="694" y="90" width="28" height="28" fill="#50a14f" stroke="#383a42" stroke-width="0.5" />
+  <rect x="726" y="90" width="28" height="28" fill="#cb7701" stroke="#383a42" stroke-width="0.5" />
+  <rect x="758" y="90" width="28" height="28" fill="#4078f2" stroke="#383a42" stroke-width="0.5" />
+  <rect x="790" y="90" width="28" height="28" fill="#a626a4" stroke="#383a42" stroke-width="0.5" />
+  <rect x="822" y="90" width="28" height="28" fill="#0184bc" stroke="#383a42" stroke-width="0.5" />
+  <rect x="854" y="90" width="28" height="28" fill="#fafafa" stroke="#383a42" stroke-width="0.5" />
+</svg>
