@@ -26,9 +26,9 @@ when you open the theme gallery and press Refresh, Install or Update; nothing el
 ## Adding a theme
 
 1. Add `themes/<id>.toml` and the license text under `LICENSES/`.
-2. Run `python3 tools/catalog.py build` to regenerate `catalog.toml` and the table below, and
-   `python3 tools/catalog.py previews` to redraw `previews/derived.svg` (a swatch row for every
-   theme with `derived = true`, where the 16 colors are this repository's mapping of a palette).
+2. Run `python3 tools/catalog.py build` to regenerate `catalog.toml`, the table below and
+   `previews/derived.svg` (a swatch row for every theme with `derived = true`, where the 16
+   colors are this repository's mapping of a palette; `previews` redraws only that file).
 3. Run the checks (Python 3.11 or newer, standard library only):
 
    ```

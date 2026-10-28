@@ -3,8 +3,8 @@
 
 Standard library only (Python 3.11+).
 
-    python3 tools/catalog.py check            validate; fail if catalog.toml, ids.txt or README is stale
-    python3 tools/catalog.py build            rewrite catalog.toml, ids.txt and the README table
+    python3 tools/catalog.py check            validate; fail if catalog.toml, ids.txt, README or preview is stale
+    python3 tools/catalog.py build            rewrite catalog.toml, ids.txt, the README table and the preview
     python3 tools/catalog.py versions <ref>   fail if an id vanished or a changed theme kept its version
     python3 tools/catalog.py previews         write previews/derived.svg (every derived = true theme)
 """
@@ -30,6 +30,7 @@ CREDIT_KEYS = ["project", "author", "url", "license", "copyright", "license_file
 MIN_CONTRAST = 4.5
 README_START = "<!-- themes:start -->"
 README_END = "<!-- themes:end -->"
+PREVIEW_PATH = "previews/derived.svg"
 ROOT = Path(__file__).resolve().parent.parent
 
 
@@ -266,6 +267,9 @@ def cmd_check(root):
             errors.append("catalog.toml is stale: run python3 tools/catalog.py build")
         if (root / "README.md").read_text(encoding="utf-8") != render_readme(root):
             errors.append("README.md theme table is stale: run python3 tools/catalog.py build")
+        pv = root / PREVIEW_PATH
+        if not pv.is_file() or pv.read_text(encoding="utf-8") != build_preview(root):
+            errors.append(f"{PREVIEW_PATH} is stale: run python3 tools/catalog.py build")
     for e in errors:
         print(f"error: {e}")
     return 1 if errors else 0
@@ -284,6 +288,7 @@ def cmd_build(root):
     (root / "ids.txt").write_text(ids_text(build_ids(root)), encoding="utf-8")
     (root / "catalog.toml").write_text(build_catalog(root), encoding="utf-8")
     (root / "README.md").write_text(render_readme(root), encoding="utf-8")
+    write_preview(root)
     return 0
 
 
@@ -367,18 +372,30 @@ def preview_svg(themes):
     return ET.tostring(svg, encoding="unicode", xml_declaration=True) + "\n"
 
 
+def derived_themes(root):
+    themes, _ = load_themes(root)
+    return {k: t for k, t in themes.items() if t["credit"].get("derived") is True}
+
+
+def build_preview(root):
+    return preview_svg(derived_themes(root))
+
+
+def write_preview(root):
+    out = root / PREVIEW_PATH
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(build_preview(root), encoding="utf-8")
+    return out
+
+
 def cmd_previews(root):
     errors, _ = validate(root)
     if errors:
         for e in errors:
             print(f"error: {e}")
         return 1
-    themes, _ = load_themes(root)
-    derived = {k: t for k, t in themes.items() if t["credit"].get("derived") is True}
-    out = root / "previews" / "derived.svg"
-    out.parent.mkdir(exist_ok=True)
-    out.write_text(preview_svg(derived), encoding="utf-8")
-    print(f"wrote {out.relative_to(root)} ({len(derived)} themes)")
+    out = write_preview(root)
+    print(f"wrote {out.relative_to(root)} ({len(derived_themes(root))} themes)")
     return 0
 
 

@@ -281,6 +281,19 @@ class PreviewTests(unittest.TestCase):
         for color in ("#0b28c5", "#0028c8", "#1628c2", "#2128bf", "#2c28bc", "#d1288f"):
             self.assertIn(color, fills)
 
+    def test_stale_preview_fails_check(self):
+        self.repo.add("alpha", name="Alpha", derived=True)
+        self.assertEqual(catalog.cmd_build(self.root), 0)
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            self.assertEqual(catalog.cmd_check(self.root), 0)
+        (self.root / "previews/derived.svg").write_text("<svg/>\n")
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            rc = catalog.cmd_check(self.root)
+        self.assertEqual(rc, 1)
+        self.assertIn("previews/derived.svg is stale", buf.getvalue())
+
     def test_previews_is_deterministic(self):
         self.repo.add("alpha", derived=True)
         catalog.cmd_previews(self.root)
