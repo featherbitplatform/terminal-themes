@@ -7,6 +7,7 @@ when you open the theme gallery and press Refresh, Install or Update; nothing el
 
 - One file per theme: `themes/<id>.toml`. The id is a lowercase slug (for example
   `catppuccin-mocha`), equal to the file name, unique and fixed forever once published.
+  At most 64 characters, and it must not start with `gallery-` (reserved by the app).
 - Permissive licenses only. The theme's `[credit] license` must be one of: `MIT`,
   `Apache-2.0`, `BSD-2-Clause`, `BSD-3-Clause`, `ISC`, `Unlicense`, `CC0-1.0`, `Zlib`.
 - Credits are required. Every `[credit]` field (project, author, url, license, copyright,
