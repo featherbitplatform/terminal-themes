@@ -1,6 +1,6 @@
 name = "Tokyo Night"
 id = "tokyo-night"
-version = 1
+version = 2
 variant = "dark"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2018-present Enkia"
 license_file = "LICENSES/tokyo-night-MIT.txt"
 description = "A clean dark theme that celebrates the lights of downtown Tokyo at night. Foreground, background and the 16 colors are the theme's terminal colors; cursor is its editor cursor, and selection is its translucent terminal selection blended onto the background."
 derived = false
+
+[suggested_font]
+family = "JetBrains Mono"
+url = "https://www.jetbrains.com/lp/mono/"
+license = "OFL-1.1"

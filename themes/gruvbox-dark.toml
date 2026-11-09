@@ -1,6 +1,6 @@
 name = "Gruvbox Dark"
 id = "gruvbox-dark"
-version = 1
+version = 2
 variant = "dark"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2018 Pavel Pertsev"
 license_file = "LICENSES/gruvbox-MIT.txt"
 description = "Retro groove color scheme, dark mode with medium contrast. The 16 colors follow the terminal colors the original color scheme defines; the cursor is the foreground (fg1) and selection is bg3, the scheme's visual-selection color. The original repository states MIT in its README; the license text is from the gruvbox-community repository."
 derived = false
+
+[suggested_font]
+family = "Inconsolata"
+url = "https://github.com/googlefonts/Inconsolata"
+license = "OFL-1.1"

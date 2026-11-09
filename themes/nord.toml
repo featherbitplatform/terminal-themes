@@ -1,6 +1,6 @@
 name = "Nord"
 id = "nord"
-version = 1
+version = 2
 variant = "dark"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2016-present Sven Greb <development@svengreb.de> (htt
 license_file = "LICENSES/nord-MIT.txt"
 description = "An arctic, north-bluish color palette. Foreground, background, cursor and the 16 colors are the official Nord terminal colors; selection is Nord 2."
 derived = false
+
+[suggested_font]
+family = "Red Hat Mono"
+url = "https://github.com/RedHatOfficial/RedHatFont"
+license = "OFL-1.1"

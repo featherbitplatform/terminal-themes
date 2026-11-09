@@ -1,6 +1,6 @@
 name = "Kanagawa"
 id = "kanagawa"
-version = 1
+version = 2
 variant = "dark"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2021 Tommaso Laurenzi"
 license_file = "LICENSES/kanagawa-MIT.txt"
 description = "Dark theme inspired by the colors of the famous painting by Katsushika Hokusai, Wave style. The 16 colors are the theme's terminal colors; foreground and background are fujiWhite and sumiInk3, cursor is oldWhite and selection is waveBlue2, as in the project's own terminal color files."
 derived = false
+
+[suggested_font]
+family = "Iosevka"
+url = "https://typeof.net/Iosevka/"
+license = "OFL-1.1"

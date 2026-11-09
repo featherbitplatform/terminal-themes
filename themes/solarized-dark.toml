@@ -1,6 +1,6 @@
 name = "Solarized Dark"
 id = "solarized-dark"
-version = 1
+version = 2
 variant = "dark"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2011 Ethan Schoonover"
 license_file = "LICENSES/solarized-MIT.txt"
 description = "Precision colors for machines and people, dark mode. The 16 colors follow the README's terminal table and background/foreground are base03/base0; cursor is base1 (emphasized content) and selection is base02 (the highlight background)."
 derived = false
+
+[suggested_font]
+family = "Source Code Pro"
+url = "https://github.com/adobe-fonts/source-code-pro"
+license = "OFL-1.1"

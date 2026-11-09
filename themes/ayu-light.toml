@@ -1,6 +1,6 @@
 name = "Ayu Light"
 id = "ayu-light"
-version = 1
+version = 2
 variant = "light"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) Konstantin Pschera <me@kons.ch> (kons.ch)"
 license_file = "LICENSES/ayu-MIT.txt"
 description = "Simple theme with bright colors, Light variant. The 16 colors are the palette's own terminal colors (ayu 9.1.0); foreground and background are the editor colors, cursor is the accent, and selection is the translucent editor selection blended onto the background."
 derived = false
+
+[suggested_font]
+family = "Geist Mono"
+url = "https://vercel.com/font"
+license = "OFL-1.1"

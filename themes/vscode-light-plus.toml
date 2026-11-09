@@ -1,6 +1,6 @@
 name = "VS Code Light+"
 id = "vscode-light-plus"
-version = 1
+version = 2
 variant = "light"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2015 - present Microsoft Corporation"
 license_file = "LICENSES/vscode-MIT.txt"
 description = "The 16 colors are VS Code's default terminal colors, which this theme does not override. Background is the theme's panel background, where the terminal is drawn; foreground is the default terminal foreground, cursor follows it, and selection is the default editor selection."
 derived = false
+
+[suggested_font]
+family = "Cascadia Code"
+url = "https://github.com/microsoft/cascadia-code"
+license = "OFL-1.1"
