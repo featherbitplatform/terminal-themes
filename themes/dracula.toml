@@ -1,6 +1,6 @@
 name = "Dracula"
 id = "dracula"
-version = 1
+version = 2
 variant = "dark"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2023 Dracula Theme"
 license_file = "LICENSES/dracula-MIT.txt"
 description = "Dark theme for vampires. The 16 colors are the specification's ANSI colors; background, foreground and selection are its palette's, and the cursor is the foreground (the specification names no cursor color)."
 derived = false
+
+[suggested_font]
+family = "Fira Code"
+url = "https://github.com/tonsky/FiraCode"
+license = "OFL-1.1"

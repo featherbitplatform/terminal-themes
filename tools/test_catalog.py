@@ -22,9 +22,11 @@ CREDIT = {
     "license_file": "LICENSES/example-MIT.txt", "description": "An example theme.",
 }
 
+FONT = {"family": "Example Mono", "url": "https://example.org/font", "license": "OFL-1.1"}
+
 
 def theme_text(id="example", credit=None, colors=None, version=1, name="Example",
-               derived=False):
+               derived=False, font=FONT):
     credit = dict(CREDIT if credit is None else credit)
     colors = colors or {k: "#%02x%02x%02x" % ((i * 11) % 256, 40, 200 - i * 3)
                         for i, k in enumerate(COLOR_KEYS)}
@@ -34,6 +36,10 @@ def theme_text(id="example", credit=None, colors=None, version=1, name="Example"
     out += ["", "[credit]"]
     out += [f"{k} = {catalog.q(v)}" for k, v in credit.items()]
     out += [f"derived = {'true' if derived else 'false'}", ""]
+    if font is not None:
+        out += ["[suggested_font]"]
+        out += [f"{k} = {catalog.q(v) if isinstance(v, str) else v}" for k, v in font.items()]
+        out += [""]
     return "\n".join(out)
 
 
@@ -349,3 +355,94 @@ class HiddenCharacterTests(unittest.TestCase):
         self.repo.add(name="Bad‮Name")
         self.assertTrue(any(e.endswith("(U+202E)") and "name" in e
                             for e in self.repo.errors()), self.repo.errors())
+
+
+class SuggestedFontTests(unittest.TestCase):
+    def setUp(self):
+        self.repo = Repo()
+        self.addCleanup(self.repo._tmp.cleanup)
+
+    def font_errors(self, font):
+        self.repo.add(font=font)
+        return [e for e in self.repo.errors() if "suggested_font" in e]
+
+    def test_theme_without_suggested_font_fails(self):
+        self.assertTrue(self.font_errors(None), self.repo.errors())
+
+    def test_valid_suggested_font_passes(self):
+        self.repo.add()
+        self.assertEqual(self.repo.errors(), [])
+
+    def test_every_key_is_required(self):
+        for key in FONT:
+            with self.subTest(key=key):
+                font = {k: v for k, v in FONT.items() if k != key}
+                errors = self.font_errors(font)
+                self.assertTrue(any(f"suggested_font.{key}" in e for e in errors), errors)
+
+    def test_empty_or_non_string_values_fail(self):
+        for key in FONT:
+            for bad in ["", "  ", 3]:
+                with self.subTest(key=key, bad=bad):
+                    errors = self.font_errors({**FONT, key: bad})
+                    self.assertTrue(any(f"suggested_font.{key}" in e for e in errors), errors)
+
+    def test_url_must_be_https_with_a_host(self):
+        for bad in ["http://example.org/font", "https://", "https:///path",
+                    "https://example.org/a b", "ftp://example.org", "example.org"]:
+            with self.subTest(bad=bad):
+                errors = self.font_errors({**FONT, "url": bad})
+                self.assertTrue(any("suggested_font.url" in e for e in errors), errors)
+
+    def test_license_must_be_on_the_font_allowlist(self):
+        for ok in ["OFL-1.1", "Apache-2.0", "MIT"]:
+            with self.subTest(ok=ok):
+                self.assertEqual(self.font_errors({**FONT, "license": ok}), [])
+        for bad in ["GPL-3.0-only", "Proprietary", "ofl-1.1", "UFL-1.0"]:
+            with self.subTest(bad=bad):
+                errors = self.font_errors({**FONT, "license": bad})
+                self.assertTrue(any("suggested_font.license" in e for e in errors), errors)
+
+    def test_unknown_key_fails(self):
+        errors = self.font_errors({**FONT, "size": "12"})
+        self.assertTrue(any("size" in e for e in errors), errors)
+
+    def test_not_a_table_fails(self):
+        self.repo.add(font=None)
+        path = self.repo.root / "themes/example.toml"
+        path.write_text('suggested_font = "Example Mono"\n' + path.read_text())
+        self.assertTrue(any("suggested_font" in e for e in self.repo.errors()))
+
+    def test_length_cap(self):
+        at_cap = "x" * catalog.MAX_FIELD_CHARS
+        self.assertEqual(self.font_errors({**FONT, "family": at_cap}), [])
+        errors = self.font_errors({**FONT, "family": at_cap + "x"})
+        self.assertTrue(any("suggested_font.family" in e and str(catalog.MAX_FIELD_CHARS) in e
+                            for e in errors), errors)
+
+    def test_hidden_characters_fail(self):
+        for c in ["\x7f", "\x1b", "\n", "‮", "​", "﻿", "⁠", "­"]:
+            for key in ("family", "url"):
+                with self.subTest(c=repr(c), key=key):
+                    errors = self.font_errors({**FONT, key: FONT[key] + c + "x"})
+                    self.assertTrue(any(f"suggested_font.{key}" in e for e in errors), errors)
+
+    def test_catalog_carries_the_suggested_font(self):
+        font = {"family": 'Mono "Q" \\ é', "url": "https://example.org/f",
+                "license": "Apache-2.0"}
+        self.repo.add(font=font)
+        built = tomllib.loads(catalog.build_catalog(self.repo.root))
+        self.assertEqual(built["themes"][0]["suggested_font"], font)
+
+    def test_readme_table_has_a_font_column(self):
+        self.repo.add()
+        header, _, row = catalog.readme_table(self.repo.root).splitlines()
+        self.assertIn("| Font |", header)
+        self.assertIn("[Example Mono](https://example.org/font) (OFL-1.1)", row)
+
+    def test_changed_suggested_font_needs_a_version_bump(self):
+        self.repo.add()
+        base = catalog.catalog_to_themes(tomllib.loads(catalog.build_catalog(self.repo.root)))
+        self.repo.add(font={**FONT, "family": "Other Mono"})
+        cur = catalog.catalog_to_themes(tomllib.loads(catalog.build_catalog(self.repo.root)))
+        self.assertTrue(catalog.check_versions(base, cur))

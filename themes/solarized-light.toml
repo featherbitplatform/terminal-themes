@@ -1,6 +1,6 @@
 name = "Solarized Light"
 id = "solarized-light"
-version = 1
+version = 2
 variant = "light"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2011 Ethan Schoonover"
 license_file = "LICENSES/solarized-MIT.txt"
 description = "Precision colors for machines and people, light mode. The 16 colors follow the README's terminal table and background/foreground are base3/base00; cursor is base01 (emphasized content) and selection is base2 (the highlight background)."
 derived = false
+
+[suggested_font]
+family = "Source Code Pro"
+url = "https://github.com/adobe-fonts/source-code-pro"
+license = "OFL-1.1"

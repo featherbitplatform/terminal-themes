@@ -1,6 +1,6 @@
 name = "Everforest Light"
 id = "everforest-light"
-version = 1
+version = 2
 variant = "light"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2019 sainnhe"
 license_file = "LICENSES/everforest-MIT.txt"
 description = "Green based color scheme, light mode with medium background. The 16 colors are the terminal colors the color scheme defines (normal and bright alike); the cursor is the foreground and selection is bg_visual, the scheme's visual-selection color."
 derived = false
+
+[suggested_font]
+family = "Victor Mono"
+url = "https://rubjo.github.io/victor-mono/"
+license = "OFL-1.1"

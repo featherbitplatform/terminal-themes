@@ -1,6 +1,6 @@
 name = "Tokyo Night Storm"
 id = "tokyo-night-storm"
-version = 2
+version = 3
 variant = "dark"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2018-present Enkia"
 license_file = "LICENSES/tokyo-night-storm-day.txt"
 description = "Tokyo Night, Storm style. Terminal colors from tokyonight.nvim by Folke Lemaitre (Apache-2.0), which extends Enkia's Tokyo Night palette (MIT): its storm style's terminal colors, foreground, background, cursor (the foreground) and visual selection. Both licenses, MIT for the Enkia palette and Apache-2.0 for the terminal colors, are in the license file."
 derived = false
+
+[suggested_font]
+family = "JetBrains Mono"
+url = "https://www.jetbrains.com/lp/mono/"
+license = "OFL-1.1"

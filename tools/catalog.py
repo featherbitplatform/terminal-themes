@@ -28,6 +28,11 @@ COLOR_KEYS = ["foreground", "background", "cursor", "selection", "black", "red",
               "bright_cyan", "bright_white"]
 CREDIT_KEYS = ["project", "author", "url", "license", "copyright", "license_file",
                "description"]
+# Every theme suggests a font: fbterm shows it with a link to `url` and never downloads it.
+FONT_KEYS = ["family", "url", "license"]
+FONT_LICENSES = ["OFL-1.1", "Apache-2.0", "MIT", "BSD-2-Clause", "BSD-3-Clause", "ISC",
+                 "Unlicense", "CC0-1.0", "Zlib"]
+MAX_FIELD_CHARS = 2000  # the app skips a catalog theme with a longer string field
 MIN_CONTRAST = 4.5
 README_START = "<!-- themes:start -->"
 README_END = "<!-- themes:end -->"
@@ -134,6 +139,8 @@ def validate_theme(root, stem, t):
         if p.parent != (root / "LICENSES").resolve() or not p.is_file():
             err(f"credit.license_file {lf!r} must be an existing file under LICENSES/")
 
+    errors += [f"{where}: {e}" for e in suggested_font_errors(t.get("suggested_font"))]
+
     fg, bg = colors.get("foreground"), colors.get("background")
     if isinstance(fg, str) and isinstance(bg, str) and HEX.match(fg) and HEX.match(bg):
         ratio = contrast(fg, bg)
@@ -141,6 +148,38 @@ def validate_theme(root, stem, t):
             warnings.append(f"{where}: warning: contrast of foreground on background is "
                             f"{ratio:.2f}:1, below {MIN_CONTRAST}:1")
     return errors, warnings
+
+
+def is_https_url(url):
+    """An https:// URL with a host and no whitespace (the app's rule)."""
+    rest = url[len("https://"):] if url.startswith("https://") else None
+    return bool(rest) and not rest.startswith("/") and not any(c.isspace() for c in rest)
+
+
+def suggested_font_errors(font):
+    if font is None:
+        return ["missing [suggested_font] table (every theme suggests a font)"]
+    if not isinstance(font, dict):
+        return ["suggested_font must be a table"]
+    errors = []
+    for k in FONT_KEYS:
+        v = font.get(k)
+        if not isinstance(v, str) or not v.strip():
+            errors.append(f"suggested_font.{k} is required and must be a non-empty string")
+        elif len(v) > MAX_FIELD_CHARS:
+            errors.append(f"suggested_font.{k} is longer than {MAX_FIELD_CHARS} characters")
+        elif (c := hidden_char(v)) is not None:
+            errors.append(f"suggested_font.{k} contains a control or invisible character "
+                          f"(U+{ord(c):04X})")
+    for k in font:
+        if k not in FONT_KEYS:
+            errors.append(f"unknown key suggested_font.{k}")
+    url, lic = font.get("url"), font.get("license")
+    if isinstance(url, str) and url.strip() and not is_https_url(url):
+        errors.append("suggested_font.url must be an https:// URL with a host")
+    if isinstance(lic, str) and lic.strip() and lic not in FONT_LICENSES:
+        errors.append(f"suggested_font.license {lic!r} is not on the allowlist {FONT_LICENSES}")
+    return errors
 
 
 def validate(root):
@@ -207,6 +246,8 @@ def entry_lines(t):
     for k in CREDIT_KEYS:
         lines.append(f"{k} = {q(t['credit'][k])}")
     lines.append(f"derived = {scalar(t['credit'].get('derived', False))}")
+    lines += ["", "[themes.suggested_font]"]
+    lines += [f"{k} = {q(t['suggested_font'][k])}" for k in FONT_KEYS]
     return lines
 
 
@@ -224,12 +265,15 @@ def md(s):
 
 def readme_table(root):
     themes, _ = load_themes(root)
-    rows = ["| Theme | Variant | Project | Author | License |", "|---|---|---|---|---|"]
+    rows = ["| Theme | Variant | Project | Author | License | Font |",
+            "|---|---|---|---|---|---|"]
     for tid in sorted(themes):
         t = themes[tid]
         c = t["credit"]
+        f = t["suggested_font"]
         rows.append(f"| {md(t['name'])} | {t['variant']} | [{md(c['project'])}]({c['url']}) "
-                    f"| {md(c['author'])} | {md(c['license'])} |")
+                    f"| {md(c['author'])} | {md(c['license'])} "
+                    f"| [{md(f['family'])}]({f['url']}) ({md(f['license'])}) |")
     return "\n".join(rows)
 
 

@@ -1,6 +1,6 @@
 name = "GitHub Light"
 id = "github-light"
-version = 1
+version = 2
 variant = "light"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2020 Primer; Primer Primitives: Copyright (c) 2018 Gi
 license_file = "LICENSES/github-theme-MIT.txt"
 description = "GitHub's light default theme. The 16 colors are its terminal colors from Primer Primitives 7.10.0 (MIT, GitHub Inc.; license in LICENSES/primer-primitives-MIT.txt); background is the panel background the terminal is drawn on, foreground and cursor are the default text color, and selection is the translucent accent selection blended onto the background."
 derived = false
+
+[suggested_font]
+family = "Monaspace Neon"
+url = "https://monaspace.githubnext.com/"
+license = "OFL-1.1"

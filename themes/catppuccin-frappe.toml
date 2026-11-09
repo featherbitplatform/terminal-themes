@@ -1,6 +1,6 @@
 name = "Catppuccin Frappé"
 id = "catppuccin-frappe"
-version = 1
+version = 2
 variant = "dark"
 
 [colors]
@@ -34,3 +34,8 @@ copyright = "Copyright (c) 2021 Catppuccin"
 license_file = "LICENSES/catppuccin-MIT.txt"
 description = "Soothing pastel theme, Frappé flavor. The 16 colors are the palette's official ANSI colors and the cursor is Rosewater; selection uses Surface 2, since fbterm draws selected text in the normal foreground."
 derived = false
+
+[suggested_font]
+family = "Maple Mono"
+url = "https://github.com/subframe7536/maple-font"
+license = "OFL-1.1"
